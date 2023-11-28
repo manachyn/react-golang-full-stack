@@ -1,0 +1,33 @@
+namespace: react-golang-full-stack
+
+full-stack-web-app:
+  defines: runnable
+  metadata:
+    name: full-stack-web-app
+    description: A full stack web application with React frontend and Golang backend.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    full-stack-web-app:
+      image: env-2057.registry.local/full-stack-web-app:master-af94152
+      build: .
+      dockerfile: Dockerfile.full-stack-web-app
+  services:
+    backend-http:
+      description: HTTP port for the backend service
+      container: full-stack-web-app
+      port: 8080
+      host-port: 8080
+      publish: true
+      protocol: tcp
+  connections: {}
+  variables:
+    username:
+      env: USERNAME
+      type: string
+      value: user123
+      description: The username for the backend service.
+
+stack:
+  defines: group
+  members:
+    - react-golang-full-stack/full-stack-web-app
