@@ -1,0 +1,37 @@
+namespace: react-golang-full-stack
+
+golang-backend:
+  defines: runnable
+  metadata:
+    name: golang-backend
+    description: >-
+      Golang backend service that serves the React frontend static files in
+      production.
+    icon: https://emojiapi.dev/api/v1/robot.svg
+  containers:
+    golang-backend:
+      image: env-2135.registry.local/golang-backend:master-af94152
+      build: .
+      dockerfile: Dockerfile.golang-backend
+  services:
+    http-server:
+      description: Port for HTTP server to handle API requests
+      container: golang-backend
+      port: 8080
+      host-port: 8080
+      publish: true
+      protocol: tcp
+  connections: {}
+  variables:
+    username:
+      env: USERNAME
+      type: string
+      value: defaultUser
+      description: >-
+        Used in the 'usernameHandler' function, likely to represent the username
+        for some internal logic.
+
+stack:
+  defines: group
+  members:
+    - react-golang-full-stack/golang-backend
